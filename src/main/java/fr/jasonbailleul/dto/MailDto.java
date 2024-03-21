@@ -8,7 +8,6 @@ import lombok.Setter;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -27,7 +26,7 @@ public class MailDto {
     @JsonProperty(index = 3)
     private String sendTo;
 
-    @JsonProperty(index = 5)
+    @JsonProperty(index = 4)
     private ApiKeyDto apiKeyDto;
 
     public MailDto(MailEntity mailEntity){

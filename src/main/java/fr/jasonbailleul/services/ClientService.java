@@ -13,7 +13,6 @@ import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
-import java.util.ArrayList;
 import java.util.Base64;
 
 @Path("/Clients/")
@@ -44,7 +43,7 @@ public class ClientService {
         apiKeyEntity.setQuota(apiKeyDto.getQuota());
         apiKeyRepo.persist(apiKeyEntity);
 
-        return Response.status(200, "Ressource créée !").build();
+        return Response.ok(apiKeyEntity.getId()).status(200, "Ressource créée !").build();
     }
 
     @DELETE

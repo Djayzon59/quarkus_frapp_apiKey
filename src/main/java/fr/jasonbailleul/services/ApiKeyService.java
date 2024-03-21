@@ -27,11 +27,11 @@ public class ApiKeyService {
     private MailRepo mailRepo;
 
 
-
     @PUT
     @Path("{id}")
     @Transactional
     @APIResponse(responseCode = "200", description = "OK !")
+    @APIResponse(responseCode = "404", description =  "Ressource non trouvée !")
     public Response updateQuota(@PathParam("id") int id, @QueryParam("quota") int quota) {
 
         ApiKeyEntity apiKeyEntity = apiKeyRepo.findById(id);
