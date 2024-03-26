@@ -11,7 +11,6 @@ public class Argon2 {
 
     String password;
 
-
     public static byte[] generateArgon2idMinimal(String password, byte[] salt) {
         int opsLimit = 2;
         int memLimit = 8192;

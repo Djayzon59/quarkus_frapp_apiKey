@@ -28,12 +28,20 @@ public class MailDto {
 
     @JsonProperty(index = 4)
     private ApiKeyDto apiKeyDto;
+    private String texte;
+
 
     public MailDto(MailEntity mailEntity){
         this.id = mailEntity.getIdMail();
         this.subject = mailEntity.getSubject();
         this.sendTo = mailEntity.getSendTo();
         this.apiKeyDto = new ApiKeyDto();
+    }
+
+    public MailDto(String subject, String sendTo, String texte) {
+        this.subject = subject;
+        this.sendTo = sendTo;
+        this.texte = texte;
     }
 
     public static List<MailDto> toDtoList(List <MailEntity> mailEntities){

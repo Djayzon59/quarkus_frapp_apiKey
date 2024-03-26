@@ -5,7 +5,6 @@ import fr.jasonbailleul.entities.ApiKeyEntity;
 import fr.jasonbailleul.entities.MailEntity;
 import fr.jasonbailleul.repositories.ApiKeyRepo;
 import fr.jasonbailleul.repositories.MailRepo;
-import io.vertx.core.cli.annotations.Hidden;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -16,7 +15,8 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 
-@Path("/ApiKeys/")
+
+@Path("/apiKey/")
 @Tag(name = "API Key")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -31,19 +31,18 @@ public class ApiKeyService {
     @Path("{id}")
     @Transactional
     @APIResponse(responseCode = "200", description = "OK !")
-    @APIResponse(responseCode = "404", description =  "Ressource non trouvée !")
+    @APIResponse(responseCode = "404", description = "Ressource non trouvée !")
     public Response updateQuota(@PathParam("id") int id, @QueryParam("quota") int quota) {
 
         ApiKeyEntity apiKeyEntity = apiKeyRepo.findById(id);
         if (apiKeyEntity == null) {
             return Response.status(404, "Ressource non trouvée").build();
         }
+
         apiKeyEntity.setQuota(quota);
         apiKeyRepo.persist(apiKeyEntity);
-
         return Response.status(200, "Quota mis à jour !").build();
     }
-
 
 
     @GET
@@ -58,9 +57,9 @@ public class ApiKeyService {
         if (apiKeyEntity == null)
             return Response.status(250, "Clef invalide !").build();
 
-        if (apiKeyEntity.getQuota() != 0){
+        if (apiKeyEntity.getQuota() != 0) {
             long usageCount = mailRepo.getUsageCount(apiKeyEntity.getId());
-            if(usageCount >= apiKeyEntity.getQuota()){
+            if (usageCount >= apiKeyEntity.getQuota()) {
                 return Response.status(251, "Quota dépassé !").build();
             }
         }
@@ -72,13 +71,13 @@ public class ApiKeyService {
     @POST
     @Operation(hidden = true)
     @APIResponse(responseCode = "200", description = "OK !")
-    public Response saveMail(MailDto mailDto, @HeaderParam("clef") String clef){
+    public Response saveMail(MailDto mailDto, @HeaderParam("clef") String clef) {
         ApiKeyEntity apiKeyEntity = apiKeyRepo.findByKey(clef);
         MailEntity mailEntity = new MailEntity();
         mailEntity.setSubject(mailDto.getSubject());
         mailEntity.setSendTo(mailDto.getSendTo());
         mailEntity.setSubject(mailDto.getSubject());
-        mailEntity.getApiKeyEntity().setId(apiKeyEntity.getId());
+        mailEntity.setApiKeyEntity(apiKeyEntity);
         mailRepo.persist(mailEntity);
 
         return Response.status(200).build();

@@ -11,7 +11,8 @@ import jakarta.ws.rs.core.Response;
 public class ApiKeyRepo implements PanacheRepositoryBase <ApiKeyEntity, Integer> {
 
     public ApiKeyEntity findByKey(String clef) {
-        return find("clef", clef).firstResult();
+        ApiKeyEntity apiKeyEntity = find("clef", clef).firstResult();
+        return apiKeyEntity;
     }
 
 

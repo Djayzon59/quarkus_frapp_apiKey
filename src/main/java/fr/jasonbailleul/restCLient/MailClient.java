@@ -10,9 +10,9 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 @Path("/mails")
 public interface MailClient {
 
-    @POST
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public Response sendEmail (MailDto mailDto, @HeaderParam("ApiKey") String apiKey);
+    public Response sendMailWithoutKey (MailDto mailDto);
 
 }

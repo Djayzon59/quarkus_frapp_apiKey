@@ -1,6 +1,7 @@
 package fr.jasonbailleul.services;
 
 import fr.jasonbailleul.dto.ApiKeyDto;
+import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
@@ -8,6 +9,8 @@ import org.junit.jupiter.api.*;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
 
+
+@QuarkusTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ClientServiceTest {
 
@@ -27,7 +30,7 @@ class ClientServiceTest {
                 .contentType(ContentType.JSON)
                 .body(apiKeyDto)
                 .when()
-                .post("/Clients/new/")
+                .post("/client/")
                 .then()
                 .statusCode(200)
                 .extract().response();
@@ -38,9 +41,9 @@ class ClientServiceTest {
     @Test
     @Order(2)
     void getAll() {
-         given()
+        given()
                 .when()
-                .get("/Clients/")
+                .get("/client/")
                 .then()
                 .statusCode(200);
     }
@@ -48,14 +51,16 @@ class ClientServiceTest {
     @Test
     @Order(3)
     void delete() {
-        System.out.println(id);
+        System.out.println();
         given()
                 .pathParam("id", id)
                 .when()
-                .delete("Clients/{id}")
+                .delete("client/{id}")
                 .then()
                 .statusCode(200);
     }
+
+
 
 
 }

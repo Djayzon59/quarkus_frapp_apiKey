@@ -7,13 +7,16 @@ import jakarta.enterprise.context.RequestScoped;
 import java.util.List;
 
 @RequestScoped
-public class MailRepo implements PanacheRepositoryBase <MailEntity, Integer> {
+public class MailRepo implements PanacheRepositoryBase<MailEntity, Integer> {
 
     public long getUsageCount(int idApiKey) {
         return count("apiKeyEntity.id", idApiKey);
     }
 
 
+    public void deleteByIdApiKey(int idApiKey) {
+        delete("apiKeyEntity.id", idApiKey);
+    }
 
 
 }
